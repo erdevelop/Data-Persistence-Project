@@ -7,6 +7,7 @@ using System.IO;
 
 public class MainManager : MonoBehaviour
 {
+    
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
@@ -26,7 +27,14 @@ public class MainManager : MonoBehaviour
     void Start()
     {
         LoadBestScore();
+        
+        BrickCreator();
+        
+        BestScoreTextShow();
+    }
 
+    public void BrickCreator()
+    {
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -41,8 +49,8 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
-        BestScoreTextShow();
     }
+
     private void Update()
     {
         if (!m_Started)
@@ -60,7 +68,7 @@ public class MainManager : MonoBehaviour
         }
         else if (m_GameOver)
         {
-            if(m_Points > bestScore)
+            if(m_Points >= bestScore)
             {
                 bestScore = m_Points;
                 playerName = UIManager.instance.playerName;
